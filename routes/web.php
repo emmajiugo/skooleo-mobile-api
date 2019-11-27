@@ -26,9 +26,9 @@ Route::group(['prefix' => 'api/v1'], function () use ($router) {
     Route::get('/user/{id}', 'UserController@getUserDetails');
     Route::post('/user/update', 'UserController@updateUserDetails');
 
-    // get list pf verified school
-    Route::post('/schools', 'SchoolController@listVerifiedSchool');
-    // get list pf verified school
+    // get list of verified school
+    Route::get('/schools', 'SchoolController@listVerifiedSchool');
+    // get fee type for school
     Route::post('/school/feetype', 'SchoolController@getSchoolAndFeeType');
     // get fees for the school
     Route::post('/school/fees', 'SchoolController@getSchoolAndFees');

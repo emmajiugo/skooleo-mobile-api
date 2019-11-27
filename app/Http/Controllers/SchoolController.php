@@ -18,10 +18,11 @@ class SchoolController extends Controller
         $isValid = $this->checkForAuthorization($request->header('Authorization'));
 
         if ($isValid) {
-            $schools = SchoolDetail::select('id', 'schoolname', 'schooladdress')->where([
-                ['schoolname', 'LIKE', '%'.$request->school.'%'],
-                ['verifystatus', '=', 1]
-            ])->take(5)->get();
+            $schools = SchoolDetail::select('id', 'schoolname', 'schooladdress')->where('verifystatus', 1)->get();
+            // $schools = SchoolDetail::select('id', 'schoolname', 'schooladdress')->where([
+            //     ['schoolname', 'LIKE', '%'.$request->school.'%'],
+            //     ['verifystatus', '=', 1]
+            // ])->take(5)->get();
 
             if ($schools) {
                 return response()->json($schools);
