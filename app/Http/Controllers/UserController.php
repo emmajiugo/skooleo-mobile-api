@@ -41,17 +41,67 @@ class UserController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'password' => Hash::make($request->password),
-                'api_token' => hash("sha512", "SKOOLEO".$request->email)
+                'api_token' => hash("sha512", "SKOOLEO".$request->email."".$request->password)
             ]);
 
             return response()->json($this->customResponse("OK", "user created", $user), 201);
 
         } else {
 
-            return response()->json($this->customResponse("error", "An error occured, please contact support"), 417);
+            return response()->json($this->customResponse("error", "A user with the record [email/phone] already exists"), 417);
         }
     }
 
     //get user details
+    public function getUserDetails(Request $request, $userId)
+    {
+
+        $isValid = $this->checkForAuthorization($request->header('Authorization'));
+
+        if ($isValid) {
+            $user = User::find($userId);
+
+            if ($user) {
+
+                return response()->json($this->customResponse("OK", "user found", $user));
+            }
+            return response()->json($this->customResponse("error", "user not found"));
+
+        } else {
+
+            return response()->json($this->accessDenied(), 401);
+        }
+    }
+
     //update user record
+    public function updateUserDetails(Request $request)
+    {
+
+        $isValid = $this->checkForAuthorization($request->header('Authorization'));
+
+        if ($isValid) {
+
+            $user = User::where('phone', $request->phone)->first();
+
+            if(!$user) {
+                $update = User::whereEmail($request->email)->first();
+
+                if($update) {
+                    $update->phone = $request->phone;
+                    $update->fullname = $request->fullname;
+                    $update->save();
+
+                    return response()->json($this->customResponse("OK", "update successful", $update));
+                }
+
+                return response()->json($this->customResponse("error", "user not found"));
+            }
+
+            return response()->json($this->customResponse("error", "phone number already found in our record"));
+
+        } else {
+
+            return response()->json($this->accessDenied(), 401);
+        }
+    }
 }

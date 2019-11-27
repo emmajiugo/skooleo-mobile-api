@@ -22,11 +22,19 @@ Route::group(['prefix' => 'api/v1'], function () use ($router) {
     Route::post('/login', 'UserController@loginUser');
     Route::post('/register', 'UserController@registerUser');
 
+    //user
+    Route::get('/user/{id}', 'UserController@getUserDetails');
+    Route::post('/user/update', 'UserController@updateUserDetails');
+
     // get list pf verified school
     Route::post('/schools', 'SchoolController@listVerifiedSchool');
     // get list pf verified school
     Route::post('/school/feetype', 'SchoolController@getSchoolAndFeeType');
     // get fees for the school
     Route::post('/school/fees', 'SchoolController@getSchoolAndFees');
+
+    // password
+    Route::post('/password/forgot', 'PasswordController@forgotPassword');
+    Route::post('/password/change', 'PasswordController@changePassword');
 
 });
