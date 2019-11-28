@@ -22,7 +22,7 @@ class UserController extends Controller
             $password = Hash::check($request->password, $response->password);
 
             if ($password) {
-                return response()->json($response);
+                return response()->json($this->customResponse("OK", "Authentication successful", $response),);
             }
         }
 
