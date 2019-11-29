@@ -26,7 +26,7 @@ class UserController extends Controller
             }
         }
 
-        return response()->json($this->customResponse("error", "Unauthorized user"), 401);
+        return response()->json($this->customResponse("error", "Login details is incorrect"), 401);
     }
 
     //register user
