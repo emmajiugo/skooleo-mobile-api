@@ -23,7 +23,7 @@ class PasswordController extends Controller
                 // send a password change email
                 // {...}
 
-                return response()->json($this->customResponse("OK", "Please check your email to complete the process"), 417);
+                return response()->json($this->customResponse("OK", "Please check your email to complete the process"), 200);
             }
 
             return response()->json($this->customResponse("error", "Email not  found in our record"), 404);
