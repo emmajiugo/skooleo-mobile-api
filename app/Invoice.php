@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     //
-    public function school() {
-        return $this->belongsTo('App\School');
+    public function school_detail() {
+        return $this->belongsTo('App\SchoolDetail');
+    }
+
+    public function user() {
+        return $this->belongsTo('App\User');
     }
 }

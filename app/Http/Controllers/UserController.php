@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\Skooleo;
 
 use App\User;
@@ -12,96 +13,79 @@ class UserController extends Controller
 {
     use Skooleo;
 
-    //login user
-    public function loginUser(Request $request)
+    /**
+     * Instantiate a new UserController instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $response = User::where('email', $request->email_or_phone)
-                    ->orWhere('phone', $request->email_or_phone)->first();
-
-        if($response) {
-            $password = Hash::check($request->password, $response->password);
-
-            if ($password) {
-                return response()->json($this->customResponse("OK", "Authentication successful", $response));
-            }
-        }
-
-        return response()->json($this->customResponse("error", "Login details is incorrect"), 401);
+        $this->middleware('auth');
     }
 
-    //register user
-    public function registerUser(Request $request)
+    /**
+     * Get the authenticated User.
+     *
+     * @return Response
+     */
+    public function profile()
     {
-        $result = User::where('email', $request->email)
-                    ->orWhere('phone', $request->phone)->first();
-
-        if(!$result) {
-            $user = User::create([
-                'fullname' => $request->fullname,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'password' => Hash::make($request->password),
-                'api_token' => hash("sha512", "SKOOLEO".$request->email."".$request->password)
-            ]);
-
-            return response()->json($this->customResponse("OK", "user created", $user), 201);
-
-        } else {
-
-            return response()->json($this->customResponse("error", "A user with the record [email/phone] already exists"), 417);
-        }
+        return response()->json(['user' => Auth::user()], 200);
     }
 
-    //get user details
-    public function getUserDetails(Request $request, $userId)
+    /**
+     * Update user details
+     *
+     * @return Response
+     */
+    public function updateProfile(Request $request)
     {
+        //validate incoming request
+        $this->validate($request, [
+            'fullname' => 'required|string',
+            'phone' => 'required|string',
+        ]);
 
-        $isValid = $this->checkForAuthorization($request->header('Authorization'));
+        try {
 
-        if ($isValid) {
-            $user = User::find($userId);
+            $duplicatePhone = User::where('phone', $request->phone)->first();
 
-            if ($user) {
+            if(!$duplicatePhone) {
 
-                return response()->json($this->customResponse("OK", "user found", $user));
+                $update = Auth::user();
+
+                $update->phone = $request->phone;
+                $update->fullname = $request->fullname;
+                $update->save();
+
+                return response()->json($this->customResponse("success", "User profile updated"));
             }
-            return response()->json($this->customResponse("error", "user not found"));
 
-        } else {
+            return response()->json($this->customResponse("failed", "Phone number already exists in our record"));
 
-            return response()->json($this->accessDenied(), 401);
+        } catch (\Exception $e) {
+
+            return response()->json($this->customResponse("failed", "User profile updated"), 409);
         }
     }
 
-    //update user record
-    public function updateUserDetails(Request $request)
+    /**
+     * Logout
+     */
+    public function logout()
     {
+        Auth::logout();
 
-        $isValid = $this->checkForAuthorization($request->header('Authorization'));
+        return response()->json($this->customResponse("success", "Successfully logged out"));
+    }
 
-        if ($isValid) {
-
-            $user = User::where('phone', $request->phone)->first();
-
-            if(!$user) {
-                $update = User::whereEmail($request->email)->first();
-
-                if($update) {
-                    $update->phone = $request->phone;
-                    $update->fullname = $request->fullname;
-                    $update->save();
-
-                    return response()->json($this->customResponse("OK", "update successful", $update));
-                }
-
-                return response()->json($this->customResponse("error", "user not found"));
-            }
-
-            return response()->json($this->customResponse("error", "phone number already found in our record"));
-
-        } else {
-
-            return response()->json($this->accessDenied(), 401);
-        }
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(Auth::refresh());
     }
 }

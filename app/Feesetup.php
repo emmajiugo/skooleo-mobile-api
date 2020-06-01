@@ -15,7 +15,7 @@ class Feesetup extends Model
         return $this->belongsTo('App\Feetype');
     }
 
-    public function feesbreakdown() {
+    public function feesbreakdowns() {
         return $this->hasMany('App\Feesbreakdown');
     }
 }

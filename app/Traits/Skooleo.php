@@ -2,24 +2,14 @@
 namespace App\Traits;
 
 use App\User;
+use App\Invoice;
 
 trait Skooleo
 {
-    public function checkForAuthorization($auth)
-    {
-        $isValid = User::whereApiToken($auth)->first();
-
-        return $isValid;
-    }
-
-    public function accessDenied()
-    {
-        return $error = [
-            "status" => "error",
-            "message" => "Access denied. Authorization required."
-        ];
-    }
-
+    /**
+     * Custom response returned
+     * @return Array
+     */
     public function customResponse($status, $message, $data = null)
     {
         return [
@@ -27,5 +17,19 @@ trait Skooleo
             "message"   => $message,
             "data"      => $data
         ];
+    }
+
+    // generate transaction reference
+    public function generateTrxId()
+    {
+        $trxid = "";
+        do {
+            //generate 8 different random numbers and concat them
+            for ($i = 0; $i < 8; $i++) {
+                $trxid .= mt_rand(1, 9);
+            }
+        } while (!empty(Invoice::where('invoice_reference', $trxid)->first()));
+
+        return $trxid;
     }
 }

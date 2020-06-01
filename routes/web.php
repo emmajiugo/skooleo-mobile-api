@@ -17,21 +17,32 @@ $router->get('/', function () use ($router) {
 
 Route::group(['prefix' => 'api/v1'], function () use ($router) {
 
+    // Test
     Route::get('/', function() { return "something here"; });
-    // login and register
-    Route::post('/login', 'UserController@loginUser');
-    Route::post('/register', 'UserController@registerUser');
 
-    //user
-    Route::get('/user/{id}', 'UserController@getUserDetails');
-    Route::post('/user/update', 'UserController@updateUserDetails');
+    // login and register
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+
+    // User
+    Route::get('profile', 'UserController@profile');
+    Route::post('/profile/update', 'UserController@updateProfile');
+    Route::get('logout', 'UserController@logout');
+    Route::post('token/refresh', 'UserController@refresh');
 
     // get list of verified school
-    Route::get('/schools', 'SchoolController@listVerifiedSchool');
-    // get fee type for school
+    Route::get('schools', 'SchoolController@listVerifiedSchool');
+
+    // get feetype for school
     Route::post('/school/feetype', 'SchoolController@getSchoolAndFeeType');
+
     // get fees for the school
     Route::post('/school/fees', 'SchoolController@getSchoolAndFees');
+
+    //invoice
+    Route::get('/invoice', 'InvoiceController@getInvoices');
+    Route::get('/invoice/{reference}', 'InvoiceController@getSingleInvoice');
+    Route::post('/invoice', 'InvoiceController@postInvoice');
 
     // password
     Route::post('/password/forgot', 'PasswordController@forgotPassword');

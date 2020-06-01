@@ -15,7 +15,7 @@ class PasswordController extends Controller
     //forgot password
     public function forgotPassword(Request $request)
     {
-        if($request->email != null) {
+        try {
             // check of email exists in the  db
             $email = User::whereEmail($request->email)->first();
 
@@ -23,10 +23,11 @@ class PasswordController extends Controller
                 // send a password change email
                 // {...}
 
-                return response()->json($this->customResponse("OK", "Please check your email to complete the process"), 200);
+                return response()->json($this->customResponse("success", "Please check your email to complete the process"), 200);
             }
 
-            return response()->json($this->customResponse("error", "Email not  found in our record"), 404);
+        } catch (\Exception $e) {
+            return response()->json($this->customResponse("failed", "Email not  found in our record"), 404);
         }
 
         return response()->json($this->customResponse("error", "Email is  required"), 417);
