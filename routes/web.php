@@ -48,4 +48,7 @@ Route::group(['prefix' => 'api/v1'], function () use ($router) {
     Route::post('/password/forgot', 'PasswordController@forgotPassword');
     Route::post('/password/change', 'PasswordController@changePassword');
 
+    // get web settings
+    Route::get('/web-settings', 'WebSettingsController@index');
+
 });

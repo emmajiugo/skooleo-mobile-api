@@ -104,6 +104,8 @@ class InvoiceController extends Controller
                 "fee_breakdown" => $feebreakdown,
             ];
 
+            // if ($data != );
+
             return response()->json($this->customResponse("success", "Invoice generated", $data));
 
         } catch (\Exception $e) {
