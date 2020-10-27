@@ -79,34 +79,39 @@ class InvoiceController extends Controller
         try {
             $reference = $request->reference;
             $invoice = Invoice::where('invoice_reference', $reference)->first();
-            $feebreakdown = Feesbreakdown::where('feesetup_id', $invoice->feesetup_id)->get(['description', 'amount']);
-            $feesum = $feebreakdown->sum('amount');
 
-            $data = [
-                "reference" => $invoice->invoice_reference,
-                "invoice_status" => $invoice->status,
-                "total" => $feesum,
-                "fee" => 300,
-                "grand_total" => ($feesum + 300),
-                "school" => [
-                    "name" => $invoice->school_detail->schoolname,
-                    "address" => $invoice->school_detail->schooladdress,
-                    "email" => $invoice->school_detail->schoolemail,
-                    "phone" => $invoice->school_detail->schoolphone,
-                ],
-                "student" => [
-                    "name" => $invoice->studentname,
-                    "class" => $invoice->class,
-                    "term" => $invoice->term,
-                    "session" => $invoice->session,
-                    "feetype" => $invoice->feetype_name,
-                ],
-                "fee_breakdown" => $feebreakdown,
-            ];
+            if ($invoice) {
+                $feebreakdown = Feesbreakdown::where('feesetup_id', $invoice->feesetup_id)->get(['description', 'amount']);
+                $feesum = $feebreakdown->sum('amount');
 
-            // if ($data != );
+                $data = [
+                    "reference" => $invoice->invoice_reference,
+                    "invoice_status" => $invoice->status,
+                    "total" => $feesum,
+                    "fee" => 300,
+                    "grand_total" => ($feesum + 300),
+                    "school" => [
+                        "name" => $invoice->school_detail->schoolname,
+                        "address" => $invoice->school_detail->schooladdress,
+                        "email" => $invoice->school_detail->schoolemail,
+                        "phone" => $invoice->school_detail->schoolphone,
+                    ],
+                    "student" => [
+                        "name" => $invoice->studentname,
+                        "class" => $invoice->class,
+                        "term" => $invoice->term,
+                        "session" => $invoice->session,
+                        "feetype" => $invoice->feetype_name,
+                    ],
+                    "fee_breakdown" => $feebreakdown,
+                ];
 
-            return response()->json($this->customResponse("success", "Invoice generated", $data));
+                // if ($data != );
+
+                return response()->json($this->customResponse("success", "Invoice generated", $data));
+            } else {
+                return response()->json($this->customResponse("failed", "Invoice not found", null));
+            }
 
         } catch (\Exception $e) {
             return response()->json($this->customResponse("failed", $e->getMessage()), 500);

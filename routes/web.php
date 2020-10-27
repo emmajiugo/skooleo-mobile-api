@@ -40,9 +40,9 @@ Route::group(['prefix' => 'api/v1'], function () use ($router) {
     Route::post('/school/fees', 'SchoolController@getSchoolAndFees');
 
     //invoice
-    Route::get('/invoice', 'InvoiceController@getInvoices');
+    Route::get('/invoices', 'InvoiceController@getInvoices');
     Route::get('/invoice/{reference}', 'InvoiceController@getSingleInvoice');
-    Route::post('/invoice', 'InvoiceController@postInvoice');
+    Route::post('/invoices', 'InvoiceController@postInvoice');
 
     // password
     Route::post('/password/forgot', 'PasswordController@forgotPassword');
