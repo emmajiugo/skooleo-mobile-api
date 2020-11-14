@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Listeners\ExampleListener;
+use App\Events\PaymentConfirmationEvent;
+use App\Listeners\VerifyPaymentListener;
 use Laravel\Lumen\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -12,8 +15,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\ExampleEvent' => [
-            'App\Listeners\ExampleListener',
+        PaymentConfirmationEvent::class => [
+            VerifyPaymentListener::class,
         ],
     ];
 }

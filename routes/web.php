@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -43,6 +45,11 @@ Route::group(['prefix' => 'api/v1'], function () use ($router) {
     Route::get('/invoices', 'InvoiceController@getInvoices');
     Route::get('/invoice/{reference}', 'InvoiceController@getSingleInvoice');
     Route::post('/invoices', 'InvoiceController@postInvoice');
+
+    //invoice payment
+    Route::post('/payments/single', 'InvoiceController@singlePayment');
+    Route::get('/payments/bulk', 'InvoiceController@bulkPayment');
+    Route::get('/payments/callback', 'InvoiceController@invoiceStatus');
 
     // password
     Route::post('/password/forgot', 'PasswordController@forgotPassword');

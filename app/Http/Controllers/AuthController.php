@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use App\Traits\Skooleo;
-
 use App\User;
+use App\Traits\Skooleo;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
@@ -42,7 +43,7 @@ class AuthController extends Controller
             return $this->respondWithToken($token);
         } catch(JWTException $e) {
 
-            return response()->json($this->customResponse("failed", "An error occured, please contact support.", $user), 500);
+            return response()->json($this->customResponse("failed", "An error occured, please contact support.", null), 500);
 
         }
     }

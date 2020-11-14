@@ -2,30 +2,22 @@
 
 namespace App\Listeners;
 
-use App\Events\ExampleEvent;
+
+use App\Events\PaymentConfirmationEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 class ExampleListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
      *
-     * @param  ExampleEvent  $event
+     * @param  PaymentConfirmationEvent  $event
      * @return void
      */
-    public function handle(ExampleEvent $event)
+    public function handle(PaymentConfirmationEvent $event)
     {
-        //
+        dump("Example listener here");
     }
 }
