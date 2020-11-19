@@ -16,7 +16,7 @@ class InvoiceController extends Controller
 {
     use Skooleo; use PaymentGateway;
 
-    private  $transactionFee;
+    private  $webSettings;
 
     /**
      * Instantiate a new UserController instance.
@@ -25,9 +25,9 @@ class InvoiceController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['invoiceStatus']]);
 
-        $this->transactionFee = \App\WebSettings::find(1)->transaction_fee;
+        $this->webSettings = \App\WebSettings::find(1);
     }
 
     public function getInvoices()
@@ -97,8 +97,8 @@ class InvoiceController extends Controller
                     "reference" => $invoice->invoice_reference,
                     "invoice_status" => $invoice->status,
                     "total" => $feesum,
-                    "fee" => $this->transactionFee,
-                    "grand_total" => ($feesum + $this->transactionFee),
+                    "fee" => $this->webSettings->transaction_fee,
+                    "grand_total" => ($feesum + $this->webSettings->transaction_fee),
                     "school" => [
                         "name" => $invoice->school_detail->schoolname,
                         "address" => $invoice->school_detail->schooladdress,
@@ -134,7 +134,7 @@ class InvoiceController extends Controller
         ]);
 
         $invoice = Invoice::findOrFail($request->invoice_id);
-        $grandTotal = ($invoice->amount + $this->transactionFee);
+        $grandTotal = ($invoice->amount + $this->webSettings->transaction_fee);
         $reference = $invoice->invoice_reference;
 
         return $this->invoicePayment($request, $reference, $grandTotal);
@@ -143,7 +143,7 @@ class InvoiceController extends Controller
     public function bulkPayment(Request $request) {
 
         $invoices = Invoice::where('user_id', Auth::user()->id)->where('status', 'UNPAID')->get(['amount', 'invoice_reference']);
-        $grandTotal = ($invoices->sum('amount') + (count($invoices) * $this->transactionFee));
+        $grandTotal = ($invoices->sum('amount') + (count($invoices) * $this->webSettings->transaction_fee));
         $reference = $invoices->implode('invoice_reference', '_');
 
         return $this->invoicePayment($request, $reference, $grandTotal);
@@ -182,7 +182,13 @@ class InvoiceController extends Controller
     {
         #http://127.0.0.1:8001/home/callback?status=successful&tx_ref=54257367&transaction_id=1480705
 
-        if ($request->status == "cancelled") return response()->json($this->customResponse("failed", "Payment cancelled", null));
+        if ($request->status == "cancelled") {
+            return view('confirmation', [
+                'cancelled' => true,
+                'email' => $this->webSettings->email,
+                'phone' => $this->webSettings->phone
+            ]);
+        }
 
         $txRef = $request->tx_ref;
         $transactionId = $request->transaction_id;
@@ -190,7 +196,14 @@ class InvoiceController extends Controller
         // create event here PaymentConfirmationEvent
         event(new PaymentConfirmationEvent($txRef, $transactionId));
 
-        return response()->json($this->customResponse("success", "Payment processing in progress. Please, refresh your app after few seconds to reflect the final status.", null));
+        // return response()->json($this->customResponse("success", "Payment processing in progress. Please, refresh your app after few seconds to reflect the final status.", null));
+
+        // return $request;
+        return view('confirmation', [
+            'cancelled' => false,
+            'email' => $this->webSettings->email,
+            'phone' => $this->webSettings->phone
+        ]);
 
     }
 }
