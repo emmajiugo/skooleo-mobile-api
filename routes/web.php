@@ -19,9 +19,6 @@ $router->get('/', function () use ($router) {
 
 Route::group(['prefix' => 'api/v1'], function () use ($router) {
 
-    // Test
-    Route::get('/', function() { return "something here"; });
-
     // login and register
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');

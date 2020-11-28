@@ -196,9 +196,6 @@ class InvoiceController extends Controller
         // create event here PaymentConfirmationEvent
         event(new PaymentConfirmationEvent($txRef, $transactionId));
 
-        // return response()->json($this->customResponse("success", "Payment processing in progress. Please, refresh your app after few seconds to reflect the final status.", null));
-
-        // return $request;
         return view('confirmation', [
             'cancelled' => false,
             'email' => $this->webSettings->email,
