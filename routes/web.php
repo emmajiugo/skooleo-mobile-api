@@ -23,6 +23,10 @@ Route::group(['prefix' => 'api/v1'], function () use ($router) {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
 
+    // password
+    Route::post('/password/forgot', 'PasswordController@forgotPassword');
+    Route::post('/password/change', 'PasswordController@changePassword');
+
     // User
     Route::get('profile', 'UserController@profile');
     Route::post('/profile/update', 'UserController@updateProfile');
@@ -48,11 +52,9 @@ Route::group(['prefix' => 'api/v1'], function () use ($router) {
     Route::get('/payments/bulk', 'InvoiceController@bulkPayment');
     Route::get('/payments/callback', 'InvoiceController@invoiceStatus');
 
-    // password
-    Route::post('/password/forgot', 'PasswordController@forgotPassword');
-    Route::post('/password/change', 'PasswordController@changePassword');
-
     // get web settings
     Route::get('/web-settings', 'WebSettingsController@index');
+    // Route::get('/live-chat', 'WebSettingsController@support');
+    Route::get('/store', 'WebSettingsController@ecommStore');
 
 });
