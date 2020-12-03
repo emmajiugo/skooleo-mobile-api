@@ -143,10 +143,16 @@ class InvoiceController extends Controller
     public function bulkPayment(Request $request) {
 
         $invoices = Invoice::where('user_id', Auth::user()->id)->where('status', 'UNPAID')->get(['amount', 'invoice_reference']);
-        $grandTotal = ($invoices->sum('amount') + (count($invoices) * $this->webSettings->transaction_fee));
-        $reference = $invoices->implode('invoice_reference', '_');
 
-        return $this->invoicePayment($request, $reference, $grandTotal);
+        if (count($invoices)) {
+            $grandTotal = ($invoices->sum('amount') + (count($invoices) * $this->webSettings->transaction_fee));
+            $reference = $invoices->implode('invoice_reference', '_');
+
+            return $this->invoicePayment($request, $reference, $grandTotal);
+        }
+
+        return response()->json($this->customResponse("failed", "All invoices have been paid for", null));
+
     }
 
     //direct user to payment checkout form
