@@ -63,7 +63,7 @@
 
         .copy {
             position: fixed;
-            left: 50%;
+            /* left: 50%; */
             bottom: 0;
             transform: translate(-50%, -50%);
             margin: 0 auto;
@@ -115,7 +115,7 @@
 
     </div>
     <div class="row">
-        <div class="col copy">&copy Skooleo.com</div>
+        <div class="col text-center">&copy Skooleo.com</div>
     </div>
 </body>
 
