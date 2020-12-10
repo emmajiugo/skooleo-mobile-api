@@ -16,7 +16,7 @@
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            font-size: 1.8rem;
+            font-size: 1.2rem;
             font-weight: 400;
             line-height: 1.5;
             color: #212529;
@@ -49,7 +49,7 @@
         }
 
         .image {
-            margin-top: 100px;
+            margin-top: 50px;
         }
 
         .failed {
@@ -73,7 +73,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="wrapper">
         <div class="row">
             <div class="col text-center">
                 <img src="/images/confirmation.gif" class="image" alt="confirmation">
@@ -113,9 +113,9 @@
         </div>
 
 
-    </div>
-    <div class="row">
-        <div class="col text-center">&copy Skooleo.com</div>
+        <div class="row">
+            <div class="col text-center" style="padding-top:70px">&copy Skooleo.com</div>
+        </div>
     </div>
 </body>
 
