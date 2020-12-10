@@ -24,7 +24,7 @@
             background-color: #fff;
         }
 
-        .container-fluid {
+        .container {
             position: relative;
             top: 35%;
             transform: translateY(-50%);
@@ -34,6 +34,10 @@
             font-size: 38px;
             font-weight: 800;
             color: #5f55aa;
+        }
+
+        .row {
+            width: 100%;
         }
 
         .col {
@@ -60,7 +64,7 @@
         .copy {
             position: fixed;
             left: 50%;
-            bottom: 20px;
+            bottom: 0;
             transform: translate(-50%, -50%);
             margin: 0 auto;
             color: #5f55aa;
@@ -69,7 +73,7 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col text-center">
                 <img src="/images/confirmation.gif" class="image" alt="confirmation">
@@ -107,8 +111,12 @@
                 </p>
             </div>
         </div>
+
+
     </div>
-    <span class="copy">&copy Skooleo.com</span>
+    <div class="row">
+        <div class="col copy">&copy Skooleo.com</div>
+    </div>
 </body>
 
 </html>
