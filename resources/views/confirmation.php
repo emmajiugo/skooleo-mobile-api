@@ -16,7 +16,7 @@
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            font-size: 1rem;
+            font-size: 0.8rem;
             font-weight: 400;
             line-height: 1.5;
             color: #212529;
@@ -31,7 +31,7 @@
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 20px;
             font-weight: 800;
             color: #5f55aa;
         }
@@ -49,8 +49,8 @@
         }
 
         .image {
-            margin-top: 50px;
-            width: 50%;
+            margin-top: 20px;
+            width: 100%;
         }
 
         .failed {
@@ -59,14 +59,14 @@
 
         .payment-issue {
             color: green;
-            margin-top: 150px;
+            /* margin-top: 70px; */
         }
 
         .copy {
             position: fixed;
-            left: 40%;
+            left: 50%;
             bottom: 0;
-            /* transform: translate(-50%, -50%); */
+            transform: translate(-50%, -50%);
             margin: 0 auto;
             color: #5f55aa;
         }
