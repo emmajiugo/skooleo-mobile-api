@@ -12,7 +12,7 @@
             font-size: 24px;
         }
 
-        .container {
+        .container-fluid {
             position: relative;
             top: 35%;
             transform: translateY(-50%);
@@ -45,7 +45,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col text-center">
                 <img src="/images/confirmation.gif" alt="confirmation">
