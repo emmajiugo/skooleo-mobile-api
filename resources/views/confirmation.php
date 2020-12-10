@@ -114,10 +114,8 @@
         </div>
 
 
-        <div class="row">
-            <div class="col copy text-center">&copy Skooleo.com</div>
-        </div>
     </div>
+    <span class="copy">&copy Skooleo.com</span>
 </body>
 
 </html>
