@@ -41,7 +41,7 @@
         }
 
         .col {
-            padding: 45px;
+            padding: 20px 45px;
         }
 
         .text-center {
@@ -49,7 +49,7 @@
         }
 
         .image {
-            margin-top: 20px;
+            /* margin-top: 20px; */
             width: 100%;
         }
 
