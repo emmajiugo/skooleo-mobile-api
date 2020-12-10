@@ -168,9 +168,6 @@ class InvoiceController extends Controller
             'callback'      =>  $request->root() . "/api/v1/payments/callback"
         ];
 
-        $link = $request->root() . "/api/v1/payments/callback";
-        return response()->json($this->customResponse("success", "Payment link", $link));
-
         //send to payment gateway to charge
         $paymentLink = $this->flutterwaveCheckoutForm($payload);
         // return $paymentLink;
@@ -191,19 +188,19 @@ class InvoiceController extends Controller
     {
         #http://127.0.0.1:8001/home/callback?status=successful&tx_ref=54257367&transaction_id=1480705
 
-        // if ($request->status == "cancelled") {
-        //     return view('confirmation', [
-        //         'cancelled' => true,
-        //         'email' => $this->webSettings->email,
-        //         'phone' => $this->webSettings->phone
-        //     ]);
-        // }
+        if ($request->status == "cancelled") {
+            return view('confirmation', [
+                'cancelled' => true,
+                'email' => $this->webSettings->email,
+                'phone' => $this->webSettings->phone
+            ]);
+        }
 
-        // $txRef = $request->tx_ref;
-        // $transactionId = $request->transaction_id;
+        $txRef = $request->tx_ref;
+        $transactionId = $request->transaction_id;
 
-        // // create event here PaymentConfirmationEvent
-        // event(new PaymentConfirmationEvent($txRef, $transactionId));
+        // create event here PaymentConfirmationEvent
+        event(new PaymentConfirmationEvent($txRef, $transactionId));
 
         return view('confirmation', [
             'cancelled' => false,

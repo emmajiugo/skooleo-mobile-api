@@ -1,10 +1,6 @@
 <html>
 
 <head>
-    <!-- CSS only -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
-    <!-- <link href="/css/bootstrap.min.css" rel="stylesheet"> -->
-
     <style>
         html {
             font-family: sans-serif;
@@ -96,7 +92,7 @@
 
                 <div class="col text-center">
                     <h1>Payment Confirmation</h1>
-                    <p>Payment processing in progress. Please, navigate back to invoice page and refresh your app after few seconds to reflect the final status.</p>
+                    <p>Payment processing in progress. Please, close the page using the <code style="color:red; font-size: 20px; font-weight:600">x</code> at the top left and navigate back to invoice page to reflect the final status.</p>
                 </div>
 
             <?php
