@@ -16,7 +16,7 @@
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 400;
             line-height: 1.5;
             color: #212529;
@@ -31,7 +31,7 @@
         }
 
         h1 {
-            font-size: 38px;
+            font-size: 28px;
             font-weight: 800;
             color: #5f55aa;
         }
@@ -50,6 +50,7 @@
 
         .image {
             margin-top: 50px;
+            width: 50%;
         }
 
         .failed {
@@ -63,9 +64,9 @@
 
         .copy {
             position: fixed;
-            /* left: 50%; */
+            left: 40%;
             bottom: 0;
-            transform: translate(-50%, -50%);
+            /* transform: translate(-50%, -50%); */
             margin: 0 auto;
             color: #5f55aa;
         }
@@ -114,7 +115,7 @@
 
 
         <div class="row">
-            <div class="col text-center" style="padding-top:70px">&copy Skooleo.com</div>
+            <div class="col copy text-center">&copy Skooleo.com</div>
         </div>
     </div>
 </body>
