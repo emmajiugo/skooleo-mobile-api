@@ -3,7 +3,7 @@
 <head>
     <!-- CSS only -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-CuOF+2SnTUfTwSZjCXf01h7uYhfOBuxIhGKPbfEJ3+FqH/s6cIFN9bGr1HmAg4fQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
     <style>
         body {
@@ -47,7 +47,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 text-center">
+            <div class="col text-center">
                 <img src="/images/confirmation.gif" alt="confirmation">
             </div>
         </div>
@@ -56,7 +56,7 @@
             if ($cancelled) {
             ?>
 
-                <div class="col-sm-12 text-center">
+                <div class="col text-center">
                     <h1 class="failed">Payment Cancelled</h1>
                     <p>We hate to see you go, but reach out to us if you have a way we can improve our services to accomodate you.</p>
                 </div>
@@ -65,7 +65,7 @@
             } else {
             ?>
 
-                <div class="col-sm-12 text-center">
+                <div class="col text-center">
                     <h1>Payment Confirmation</h1>
                     <p>Payment processing in progress. Please, navigate back to invoice page and refresh your app after few seconds to reflect the final status.</p>
                 </div>
@@ -75,7 +75,7 @@
             ?>
         </div>
         <div class="row">
-            <div class="col-sm-12 text-center payment-issue">
+            <div class="col text-center payment-issue">
                 <p>
                     For any payment related issues, <br>
                     send an email to <b><?= $email ?></b> <br>
