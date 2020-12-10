@@ -3,13 +3,25 @@
 <head>
     <!-- CSS only -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
         body {
-            letter-spacing: 1;
-            line-height: 2;
-            font-size: 24px;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 1.8rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: left;
+            background-color: #fff;
         }
 
         .container-fluid {
@@ -22,6 +34,18 @@
             font-size: 38px;
             font-weight: 800;
             color: #5f55aa;
+        }
+
+        .col {
+            padding: 45px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .image {
+            margin-top: 100px;
         }
 
         .failed {
@@ -48,7 +72,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center">
-                <img src="/images/confirmation.gif" alt="confirmation">
+                <img src="/images/confirmation.gif" class="image" alt="confirmation">
             </div>
         </div>
         <div class="row">
