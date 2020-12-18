@@ -54,7 +54,7 @@ Route::group(['prefix' => 'api/v1'], function () use ($router) {
 
     // get web settings
     Route::get('/web-settings', 'WebSettingsController@index');
-    // Route::get('/live-chat', 'WebSettingsController@support');
+    Route::get('/live-chat', 'WebSettingsController@support');
     Route::get('/store', 'WebSettingsController@ecommStore');
 
 });

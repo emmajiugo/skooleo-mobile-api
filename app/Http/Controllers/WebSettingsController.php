@@ -28,7 +28,7 @@ class WebSettingsController extends Controller
 
     public function support()
     {
-        return view('live-chat');
+        return response()->json($this->customResponse("success", "live chat url", env('LIVE_CHAT_URL')));
     }
 
     public function ecommStore()
