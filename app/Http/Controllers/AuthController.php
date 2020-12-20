@@ -37,7 +37,7 @@ class AuthController extends Controller
                 $allowedEmails = explode(",", env('ALLOWED_EMAILS'));
 
                 if (!in_array($request->email_phone, $allowedEmails)) {
-                    return response()->json($this->customResponse("failed", "The app is under maintenance! we will be back shortly."), 503);
+                    return response()->json($this->customResponse("failed", "App is under maintenance! we will be back shortly."), 503);
                 }
 
             }
@@ -49,7 +49,7 @@ class AuthController extends Controller
             $credentials = [$login_type => $request->email_phone, 'password' => $request->password];
 
             if (!$token = Auth::attempt($credentials)) {
-                return response()->json($this->customResponse("failed", "Unauthorized"), 401);
+                return response()->json($this->customResponse("failed", "Invalid username or password"), 401);
             }
 
             return $this->respondWithToken($token);
