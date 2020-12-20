@@ -37,7 +37,7 @@ class AuthController extends Controller
                 $allowedEmails = explode(",", env('ALLOWED_EMAILS'));
 
                 if (!in_array($request->email_phone, $allowedEmails)) {
-                    return response()->json($this->customResponse("success", "The app is under maintenance! we will be back shortly."), 503);
+                    return response()->json($this->customResponse("failed", "The app is under maintenance! we will be back shortly."), 503);
                 }
 
             }
