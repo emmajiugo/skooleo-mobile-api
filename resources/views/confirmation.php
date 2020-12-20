@@ -1,15 +1,23 @@
 <html>
 
 <head>
-    <!-- CSS only -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-CuOF+2SnTUfTwSZjCXf01h7uYhfOBuxIhGKPbfEJ3+FqH/s6cIFN9bGr1HmAg4fQ" crossorigin="anonymous">
-
     <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
         body {
-            letter-spacing: 1;
-            line-height: 2;
-            font-size: 24px;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: left;
+            background-color: #fff;
         }
 
         .container {
@@ -19,9 +27,26 @@
         }
 
         h1 {
-            font-size: 38px;
+            font-size: 20px;
             font-weight: 800;
             color: #5f55aa;
+        }
+
+        .row {
+            width: 100%;
+        }
+
+        .col {
+            padding: 20px 45px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .image {
+            /* margin-top: 20px; */
+            width: 100%;
         }
 
         .failed {
@@ -30,13 +55,13 @@
 
         .payment-issue {
             color: green;
-            margin-top: 150px;
+            /* margin-top: 70px; */
         }
 
         .copy {
             position: fixed;
             left: 50%;
-            bottom: 20px;
+            bottom: 0;
             transform: translate(-50%, -50%);
             margin: 0 auto;
             color: #5f55aa;
@@ -45,10 +70,10 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="wrapper">
         <div class="row">
-            <div class="col-sm-12 text-center">
-                <img src="/images/confirmation.gif" alt="confirmation">
+            <div class="col text-center">
+                <img src="/images/confirmation.gif" class="image" alt="confirmation">
             </div>
         </div>
         <div class="row">
@@ -56,7 +81,7 @@
             if ($cancelled) {
             ?>
 
-                <div class="col-sm-12 text-center">
+                <div class="col text-center">
                     <h1 class="failed">Payment Cancelled</h1>
                     <p>We hate to see you go, but reach out to us if you have a way we can improve our services to accomodate you.</p>
                 </div>
@@ -65,9 +90,9 @@
             } else {
             ?>
 
-                <div class="col-sm-12 text-center">
+                <div class="col text-center">
                     <h1>Payment Confirmation</h1>
-                    <p>Payment processing in progress. Please, navigate back to invoice page and refresh your app after few seconds to reflect the final status.</p>
+                    <p>Payment processing in progress. Please, close the page using the <code style="color:red; font-size: 20px; font-weight:600">x</code> at the top left and navigate back to invoice page to reflect the final status.</p>
                 </div>
 
             <?php
@@ -75,7 +100,7 @@
             ?>
         </div>
         <div class="row">
-            <div class="col-sm-12 text-center payment-issue">
+            <div class="col text-center payment-issue">
                 <p>
                     For any payment related issues, <br>
                     send an email to <b><?= $email ?></b> <br>
@@ -83,6 +108,8 @@
                 </p>
             </div>
         </div>
+
+
     </div>
     <span class="copy">&copy Skooleo.com</span>
 </body>

@@ -22,14 +22,19 @@ trait Skooleo
     // generate transaction reference
     public function generateTrxId()
     {
-        $trxid = "";
+        $reference = $this->getYearMonth();
         do {
-            //generate 8 different random numbers and concat them
-            for ($i = 0; $i < 8; $i++) {
-                $trxid .= mt_rand(1, 9);
+            //generate 4 different random numbers and concat them
+            for ($i = 0; $i < 4; $i++) {
+                $reference .= mt_rand(1, 9);
             }
-        } while (!empty(Invoice::where('invoice_reference', $trxid)->first()));
+        } while (!empty(Invoice::where('invoice_reference', $reference)->first()));
 
-        return $trxid;
+        return $reference;
+    }
+
+    protected function getYearMonth()
+    {
+        return date("Y") . date("m");
     }
 }

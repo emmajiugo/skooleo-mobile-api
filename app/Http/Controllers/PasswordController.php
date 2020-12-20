@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Traits\Skooleo;
 
 use  App\User;
@@ -12,49 +13,59 @@ class PasswordController extends Controller
 {
     use Skooleo;
 
-    //forgot password
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['forgotPassword']]);
+    }
+
+
     public function forgotPassword(Request $request)
     {
         try {
             // check of email exists in the  db
-            $email = User::whereEmail($request->email)->first();
+            $user = User::whereEmail($request->email_or_phone)->orWhere('phone', $request->email_or_phone)->first();
 
-            if($email) {
-                // send a password change email
-                // {...}
+            if($user) {
+                // reset user password to the registered phone number
+                $user->password = Hash::make($user->phone);
+                $user->save();
 
-                return response()->json($this->customResponse("success", "Please check your email to complete the process"), 200);
+                return response()->json($this->customResponse("success", "Your password have been reset to your registered phone number. Please login and change your password"), 200);
             }
+
+        } catch (\Exception $e) {
+            return response()->json($this->customResponse("failed", "An error occurred, please contact us."), 417);
+        }
+
+        return response()->json($this->customResponse("failed", "Email not  found in our record"), 404);
+    }
+
+
+    public function changePassword(Request $request)
+    {
+        try {
+            $userId = Auth::user()->id;
+
+            $user =  User::findOrFail($userId);
+
+            if ($user){
+
+                if ($request->new_password !== $request->confirm_new_password) return response()->json($this->customResponse("error", "Passwords do not match"), 407);
+
+                // update the password with new password
+                $user->password = Hash::make($request->new_password);
+                $user->save();
+
+                return response()->json($this->customResponse("success", "password changed", null), 200);
+            }
+
+            return response()->json($this->customResponse("failed", "Email not  found in our record"), 404);
 
         } catch (\Exception $e) {
             return response()->json($this->customResponse("failed", "Email not  found in our record"), 404);
         }
 
-        return response()->json($this->customResponse("error", "Email is  required"), 417);
-    }
 
-    //change password
-    public function changePassword(Request $request)
-    {
-        $isValid = $this->checkForAuthorization($request->header('Authorization'));
 
-        if ($isValid) {
-            $user =  User::whereEmail($request->email)->first();
-
-            if ($user){
-                // update the password with new password
-                $user->password = Hash::make($request->new_password);
-                $user->api_token = hash("sha512", "SKOOLEO".$request->email."".$request->new_password);
-                $user->save();
-
-                return response()->json($this->customResponse("OK", "password changed", $user), 201);
-            }
-
-            return response()->json($this->customResponse("error", "Email not  found in our record"), 404);
-
-        } else {
-
-            return response()->json($this->accessDenied(), 401);
-        }
     }
 }
