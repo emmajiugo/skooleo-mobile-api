@@ -30,17 +30,30 @@ class AuthController extends Controller
 
         try {
 
-            $login_type = filter_var( $request->email_phone, FILTER_VALIDATE_EMAIL ) ? 'email' : 'phone';
+            // check if the app is under maintenance
+            if (env('MAINTENANCE_MODE')) {
+
+                // check allowed emails
+                $allowedEmails = explode(",", env('ALLOWED_EMAILS'));
+
+                if (!in_array($request->email_phone, $allowedEmails)) {
+                    return response()->json($this->customResponse("success", "The app is under maintenance! we will be back shortly."), 503);
+                }
+
+            }
+
+            $login_type = filter_var($request->email_phone, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
             // return $login_type;
 
-            $credentials = [$login_type => $request->email_phone, 'password'=>$request->password];
+            $credentials = [$login_type => $request->email_phone, 'password' => $request->password];
 
-            if (! $token = Auth::attempt($credentials)) {
+            if (!$token = Auth::attempt($credentials)) {
                 return response()->json($this->customResponse("failed", "Unauthorized"), 401);
             }
 
             return $this->respondWithToken($token);
+
         } catch(JWTException $e) {
 
             return response()->json($this->customResponse("failed", "An error occured, please contact support.", null), 500);
@@ -53,6 +66,9 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        // check if the app is under maintenance
+        if (env('MAINTENANCE_MODE')) return response()->json($this->customResponse("success", "The app is under maintenance! we will be back shortly."), 503);
+
         //validate incoming request
         $this->validate($request, [
             'fullname' => 'required|string',
