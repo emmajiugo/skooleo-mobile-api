@@ -165,7 +165,7 @@ class InvoiceController extends Controller
             'email'         =>  Auth::user()->email,
             'user_phone'    =>  Auth::user()->phone,
             'user_name'     =>  Auth::user()->fullname,
-            'callback'      =>  $request->root() . "/api/v1/payments/callback"
+            'callback'      =>  "https://" . $request->getHttpHost() . "/api/v1/payments/callback"
         ];
 
         //send to payment gateway to charge
