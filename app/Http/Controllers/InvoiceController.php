@@ -167,7 +167,6 @@ class InvoiceController extends Controller
             'user_name'     =>  Auth::user()->fullname,
             'callback'      =>  env('APP_URL'). "/api/v1/payments/callback"
         ];
-        return $payload;
 
         //send to payment gateway to charge
         $paymentLink = $this->flutterwaveCheckoutForm($payload);
