@@ -25,7 +25,7 @@ trait Skooleo
         $reference = $this->getYearMonth();
         do {
             //generate 4 different random numbers and concat them
-            for ($i = 0; $i < 4; $i++) {
+            for ($i = 0; $i < 6; $i++) {
                 $reference .= mt_rand(1, 9);
             }
         } while (!empty(Invoice::where('invoice_reference', $reference)->first()));
