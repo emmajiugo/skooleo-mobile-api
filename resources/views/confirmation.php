@@ -73,7 +73,7 @@
     <div class="wrapper">
         <div class="row">
             <div class="col text-center">
-                <img src="/images/confirmation.gif" class="image" alt="confirmation">
+                <img src="https://res.cloudinary.com/debsl2ii1/image/upload/v1610099479/general/confirmation_tcxra9.gif" class="image" alt="confirmation">
             </div>
         </div>
         <div class="row">
